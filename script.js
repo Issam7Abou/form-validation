@@ -16,13 +16,14 @@ function validateForm() {
         message.textContent = 'Please fill out all fields.';
         message.style.color = 'red';
         messageContainer.style.borderColor = 'red';
+        return;
     }
     // Check to see if passwords match
-    if (password1El.value === password2El) {
+    if (password1El.value === password2El.value) {
         passwordsMatch = true;
         password1El.style.borderColor = 'green';
         password2El.style.borderColor = 'green';
-    } else {
+    } else if (isValid) {
         passwordsMatch = false;
         password1El.style.borderColor = 'red';
         password2El.style.borderColor = 'red';
@@ -30,6 +31,7 @@ function validateForm() {
         message.style.color = 'red';
         message.style.borderColor = 'red';
         messageContainer.style.borderColor = 'red';
+        return;
     }
     // If Form is Valid and Password match
     if (isValid && passwordsMatch) {
@@ -39,12 +41,29 @@ function validateForm() {
     }
 }
 
+// This will Store the Form Data
+function storeFormData() {
+    const user = {
+        name: form.name.value,
+        phone: form.phone.value,
+        email: form.email.value,
+        website: form.website.value,
+        password: form.password.value,
+    };
+    // Do something with user data, in this case i will just console log it
+    console.log(user);
+}
+
 // This will Validate the Form // Store the Data
 function processFormData(e) {
     e.preventDefault();
     // Validade Form
     validateForm();
+    // Submit and Store Data if the Form is Valid
+    if (isValid && passwordsMatch) {
+        storeFormData();
+    }
 }
 
 // Event Listener
-form.addEventListener('submit', processFormData)
+form.addEventListener('submit', processFormData);
